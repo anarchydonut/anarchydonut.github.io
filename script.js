@@ -1,58 +1,80 @@
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
-const hero = document.getElementById("hero");
-const hiddenSection = document.getElementById("hiddenSection");
-const noMessage = document.getElementById("noMessage");
+const noText = document.getElementById("noText");
+
+const section1 = document.getElementById("section1");
+const section2 = document.getElementById("section2");
 
 let scale = 1;
 let noClicks = 0;
 
-const messages = [
-    "Är du säker? 😏",
-    "Den blir större för varje nej...",
-    "Du kan inte vinna detta",
-    "Plzzzzzz... "
+const noMessages = [
+    "Är du säker? 🤨",
+    "Den känns lite feg…",
+    "Ja blir större nu.",
+    "Du gör det värre för dig själv 😅"
 ];
 
-// Nej → Ja växer + text
 noBtn.addEventListener("click", () => {
+    noClicks++;
     scale += 0.25;
     yesBtn.style.transform = `scale(${scale})`;
 
-    noClicks++;
-    noMessage.textContent =
-        messages[Math.min(noClicks - 1, messages.length - 1)];
-    noMessage.classList.add("show");
+    noText.textContent = noMessages[Math.min(noClicks - 1, noMessages.length - 1)];
 });
 
-// Ja → transition + konfetti
 yesBtn.addEventListener("click", () => {
-    hero.classList.remove("active");
+    startConfetti();
+
+    section1.classList.add("hidden");
 
     setTimeout(() => {
-        hiddenSection.classList.add("active");
-    }, 400);
-
-    launchConfetti();
+        section1.style.display = "none";
+        section2.classList.remove("hidden");
+        section2.classList.add("active");
+    }, 800);
 });
 
-// Konfetti
-function launchConfetti() {
-    for (let i = 0; i < 120; i++) {
-        const confetti = document.createElement("div");
-        confetti.className = "confetti";
+/* KONFETTI */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
 
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor = randomColor();
-        confetti.style.animationDuration =
-            2 + Math.random() * 3 + "s";
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 5000);
+let confetti = [];
+
+function startConfetti() {
+    for (let i = 0; i < 150; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 6 + 4,
+            dx: (Math.random() - 0.5) * 4,
+            dy: Math.random() * 4 + 2,
+            color: `hsl(${Math.random() * 360}, 80%, 60%)`
+        });
     }
+
+    requestAnimationFrame(updateConfetti);
 }
 
-function randomColor() {
-    const colors = ["#ff5252", "#ffeb3b", "#4caf50", "#2196f3", "#e040fb"];
-    return colors[Math.floor(Math.random() * colors.length)];
+function updateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+    });
+
+    confetti = confetti.filter(p => p.y < canvas.height);
+
+    if (confetti.length > 0) {
+        requestAnimationFrame(updateConfetti);
+    }
 }

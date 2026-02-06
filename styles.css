@@ -6,54 +6,70 @@
 }
 
 body {
-    background: #2b2b2b;
-    color: white;
+    height: 100vh;
     overflow: hidden;
+    background: linear-gradient(
+        270deg,
+        #3a1c71,
+        #5f2c82,
+        #9b23ea,
+        #ff4ecd
+    );
+    background-size: 800% 800%;
+    animation: gradientShift 18s ease infinite;
+    color: white;
 }
 
-/* Gemensam sektion */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .section {
     position: absolute;
     inset: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* ===== Sektion 1 ===== */
-.hero {
-    flex-direction: column;
-    text-align: center;
-    background: #2b2b2b;
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.1);
 }
 
-.hero h1 {
-    font-size: clamp(2rem, 6vw, 4rem);
+.active {
+    opacity: 1;
+}
+
+.title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
     margin-bottom: 3rem;
 }
 
-.hero:not(.active) {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Knappar */
 .button-wrapper {
     position: relative;
-    width: 500px;
-    height: 100px;
+    width: 260px;
+    height: 80px;
 }
 
 .btn {
     position: absolute;
-    width: 200px;
-    height: 120px;
-    font-size: 1.8rem;
+    width: 120px;
+    height: 60px;
+    font-size: 1.2rem;
     border: none;
-    border-radius: 60px;
+    border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.08);
 }
 
 .yes {
@@ -67,87 +83,30 @@ body {
     background: #f44336;
 }
 
-.btn:hover {
-    transform: scale(1.08);
-}
-
-/* Text under knappar */
-.no-message {
-    margin-top: 10rem;
+.no-text {
+    margin-top: 1.5rem;
+    opacity: 0.8;
     font-size: 1rem;
-    color: #ccc;
-    opacity: 0;
-    transition: opacity 0.3s ease;
 }
 
-.no-message.show {
-    opacity: 1;
-}
-
-/* ===== Sektion 2 ===== */
-.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(40px);
-    background: #1f1f1f;
-}
-
-.active {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0);
-}
-
-/* Innehåll */
+/* SEKTION 2 */
 .content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 900px;
-    padding: 2rem;
-}
-
-.content.vertical {
-    flex-direction: column;
     text-align: center;
+    max-width: 600px;
+    padding: 1rem;
 }
 
-.text {
-    max-width: 420px;
-}
-
-.text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-/* Bilder */
-.side-img {
+.image {
     width: 100%;
     max-width: 320px;
-    border-radius: 12px;
+    border-radius: 16px;
+    margin: 1.5rem auto;
+    display: block;
 }
 
-/* Mobil */
-@media (max-width: 768px) {
-    .side-img {
-        max-width: 260px;
-    }
-}
-
-/* ===== Konfetti ===== */
-.confetti {
+/* KONFETTI */
+#confetti {
     position: fixed;
-    top: -10px;
-    width: 10px;
-    height: 10px;
-    animation: fall linear forwards;
-    z-index: 9999;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(720deg);
-    }
+    inset: 0;
+    pointer-events: none;
 }

@@ -1,261 +1,40 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ja eller Nej</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui, sans-serif;
-}
-
-body {
-    background: #2b2b2b;
-    color: white;
-    overflow: hidden;
-}
-
-/* Sektioner */
-.section {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity .8s ease, transform .8s ease;
-}
-
-.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(40px);
-}
-
-.active {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0);
-}
-
-/* HERO */
-.hero {
-    flex-direction: column;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: clamp(2rem, 6vw, 4rem);
-    margin-bottom: 3rem;
-}
-
-.button-wrapper {
-    position: relative;
-    width: 260px;
-    height: 80px;
-}
-
-.btn {
-    position: absolute;
-    width: 120px;
-    height: 60px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform .2s ease, opacity .4s ease;
-}
-
-.yes {
-    left: 0;
-    background: #4caf50;
-    z-index: 2;
-}
-
-.no {
-    right: 0;
-    background: #f44336;
-}
-
-.btn:hover {
-    transform: scale(1.08);
-}
-
-/* Nej-text */
-.no-message {
-    margin-top: 1.5rem;
-    opacity: 0;
-    color: #ccc;
-    transition: opacity .4s ease;
-}
-
-.no-message.show {
-    opacity: 1;
-}
-
-/* SEKTION 2 */
-.section2 {
-    background: #1f1f1f;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    text-align: center;
-}
-
-.side-img {
-    max-width: 300px;
-    width: 100%;
-    border-radius: 12px;
-    opacity: 0;
-}
-
-.slide-top {
-    transform: translateY(-40px);
-}
-
-.slide-bottom {
-    transform: translateY(40px);
-}
-
-.show-img {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all .8s ease;
-}
-
-.text {
-    max-width: 420px;
-    opacity: 0;
-    transform: scale(.95);
-    transition: all .6s ease;
-}
-
-.text.show-text {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Konfetti */
-.confetti {
-    position: fixed;
-    top: -10px;
-    width: 10px;
-    height: 10px;
-    animation: fall linear forwards;
-    z-index: 9999;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(720deg);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ja eller Nej</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<section id="hero" class="section hero active">
-    <h1>Vill du?</h1>
+<!-- SEKTION 1 -->
+<section id="section1" class="section active">
+    <h1 class="title">Vill du?</h1>
 
     <div class="button-wrapper">
         <button id="yesBtn" class="btn yes">Ja</button>
         <button id="noBtn" class="btn no">Nej</button>
     </div>
 
-    <p id="noMessage" class="no-message"></p>
+    <p id="noText" class="no-text"></p>
 </section>
 
-<section id="section2" class="section section2 hidden">
+<!-- SEKTION 2 -->
+<section id="section2" class="section hidden">
     <div class="content">
-        <img src="top.jpg" class="side-img slide-top" id="imgTop">
-        <div class="text" id="textBlock">
-            <h2>🎉 Bra val!</h2>
-            <p>Du tog dig hela vägen hit.</p>
-        </div>
-        <img src="bottom.jpg" class="side-img slide-bottom" id="imgBottom">
+        <img src="top.jpg" alt="Bild ovan" class="image">
+
+        <h2>Du valde Ja 🎉</h2>
+        <p>Det här är den dolda sektionen.</p>
+
+        <img src="bottom.jpg" alt="Bild nedan" class="image">
     </div>
 </section>
 
-<script>
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const hero = document.getElementById("hero");
-const section2 = document.getElementById("section2");
-const noMessage = document.getElementById("noMessage");
+<!-- KONFETTI -->
+<canvas id="confetti"></canvas>
 
-const imgTop = document.getElementById("imgTop");
-const imgBottom = document.getElementById("imgBottom");
-const textBlock = document.getElementById("textBlock");
-
-let scale = 1;
-let noClicks = 0;
-
-const messages = [
-    "Är du säker? 😏",
-    "Den blir större…",
-    "Det här slutar inte väl",
-    "Okej, erkänn nu"
-];
-
-// Redan valt Ja tidigare?
-if (localStorage.getItem("chosen") === "yes") {
-    hero.classList.remove("active");
-    section2.classList.add("active");
-    revealSection2();
-}
-
-// Nej
-noBtn.addEventListener("click", () => {
-    scale += 0.25;
-    yesBtn.style.transform = `scale(${scale})`;
-
-    noClicks++;
-    noMessage.textContent = messages[Math.min(noClicks - 1, messages.length - 1)];
-    noMessage.classList.add("show");
-});
-
-// Ja
-yesBtn.addEventListener("click", () => {
-    localStorage.setItem("chosen", "yes");
-
-    yesBtn.style.opacity = "0";
-
-    setTimeout(() => {
-        hero.classList.remove("active");
-        section2.classList.add("active");
-        revealSection2();
-    }, 400);
-
-    launchConfetti();
-});
-
-function revealSection2() {
-    setTimeout(() => imgTop.classList.add("show-img"), 200);
-    setTimeout(() => textBlock.classList.add("show-text"), 500);
-    setTimeout(() => imgBottom.classList.add("show-img"), 800);
-}
-
-// Konfetti
-function launchConfetti() {
-    for (let i = 0; i < 120; i++) {
-        const c = document.createElement("div");
-        c.className = "confetti";
-        c.style.left = Math.random() * 100 + "vw";
-        c.style.backgroundColor = ["#ff5252","#ffeb3b","#4caf50","#2196f3","#e040fb"][Math.floor(Math.random()*5)];
-        c.style.animationDuration = 2 + Math.random() * 3 + "s";
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 5000);
-    }
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
