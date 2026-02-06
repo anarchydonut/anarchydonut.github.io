@@ -1,19 +1,40 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ja eller Nej</title>
+    <title>Får jag?</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">Är du redo?</h1>
 
-        <div class="buttons">
-            <button class="btn yes">Ja</button>
-            <button class="btn no">Nej</button>
+    <!-- Sektion 1 -->
+    <section id="hero" class="section hero active">
+        <h1>Hej Dallas bby!</h1>
+        <h1>Får jag chans på dig? :)</h1>
+
+        <div class="button-wrapper">
+            <button id="yesBtn" class="btn yes">Ja</button>
+            <button id="noBtn" class="btn no">Nej</button>
         </div>
-    </div>
+
+        <p id="noMessage" class="no-message"></p>
+    </section>
+
+    <!-- Sektion 2 -->
+    <section id="hiddenSection" class="section hidden">
+        <div class="content vertical">
+            <img src="top.jpg" class="side-img" alt="Övre bild">
+
+            <div class="text">
+                <h2>🎉 Bra val!</h2>
+                <p>Now you´re mine pook <3</p>
+            </div>
+
+            <img src="bottom.jpg" class="side-img" alt="Nedre bild">
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
 </html>
