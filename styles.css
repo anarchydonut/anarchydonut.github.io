@@ -1,168 +1,156 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: system-ui, sans-serif;
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
 body{
-    height:100vh;
-    overflow:hidden;
-    color:white;
+    min-height: 100dvh;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    color: white;
 }
 
-/* PARALLAX BAKGRUND */
+/* 🌈 Gradient bakgrund */
 #bg{
-    position:fixed;
-    inset:0;
-    z-index:-2;
+    position: fixed;
+    inset: 0;
+    z-index: -2;
 
     background: linear-gradient(135deg,
-        #ff9acb,
-        #ff6ec7,
-        #c850ff,
-        #6a5cff
+        #ffb6d9,
+        #ff8ccf,
+        #d66bff,
+        #7a6bff
     );
 
     background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
-    transition: transform 0.2s ease-out;
+    animation: gradientShift 14s ease infinite;
 }
 
-@keyframes gradientShift{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+/* 💖 Hearts container */
+#hearts{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
 }
 
+.heart{
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.25;
+    filter: blur(2px);
+    animation: floatHeart linear forwards;
+}
+
+/* 📦 Main section */
 .section{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:2rem;
-    transition: all 0.8s ease;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
 }
 
-.hidden{
-    opacity:0;
-    transform: scale(1.1);
-    pointer-events:none;
+/* 🧊 Glass card */
+.glass-card{
+    margin-top: 30px;
+    padding: 30px;
+    width: min(340px, 90vw);
+
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow:
+        0 8px 32px rgba(0,0,0,0.2),
+        inset 0 0 12px rgba(255,255,255,0.2);
 }
 
-.title{
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    margin-bottom: 3rem;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.25);
+/* ✨ Cute text */
+#noText{
+    font-size: 18px;
+    margin-bottom: 25px;
+    min-height: 24px;
+    animation: textPulse 2.5s ease-in-out infinite;
 }
 
-/* KNAPPAR */
+/* 🔘 Buttons */
 .button-wrapper{
-    position:relative;
-    width:260px;
-    height:80px;
+    position: relative;
+    width: min(280px, 90vw);
+    height: 80px;
 }
 
-.btn{
-    position:absolute;
-    width:120px;
-    height:60px;
-    border:none;
-    border-radius:999px;
-    font-size:1.2rem;
-    font-weight:600;
-    cursor:pointer;
-    transition: all 0.25s ease;
+button{
+    position: absolute;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.btn:hover{
-    transform: scale(1.08);
-    filter: brightness(1.1);
-}
-
-/* JA */
-.yes{
-    left:0;
-    background: linear-gradient(135deg,#ff4ecd,#ff6ec7);
-    color:white;
-    box-shadow: 0 8px 25px rgba(255, 78, 205, 0.45);
+/* 💘 Yes */
+#yesBtn{
+    left: 0;
+    background: linear-gradient(135deg, #ff4fa3, #ff7ac6);
+    color: white;
+    box-shadow: 0 0 18px rgba(255, 80, 160, 0.6);
     animation: glowPulse 2s infinite;
 }
 
-/* Glow puls */
+/* 🙈 No */
+#noBtn{
+    right: 0;
+    background: rgba(255,255,255,0.25);
+    color: white;
+}
+
+/* ✨ Animations */
+@keyframes gradientShift{
+    0%{ background-position: 0% 50%; }
+    50%{ background-position: 100% 50%; }
+    100%{ background-position: 0% 50%; }
+}
+
 @keyframes glowPulse{
-    0%{ box-shadow: 0 0 15px rgba(255,78,205,0.4); }
-    50%{ box-shadow: 0 0 35px rgba(255,78,205,0.9); }
-    100%{ box-shadow: 0 0 15px rgba(255,78,205,0.4); }
+    0%{ box-shadow: 0 0 12px rgba(255,80,160,0.4); }
+    50%{ box-shadow: 0 0 26px rgba(255,80,160,0.9); }
+    100%{ box-shadow: 0 0 12px rgba(255,80,160,0.4); }
 }
 
-/* NEJ */
-.no{
-    right:0;
-    background: rgba(255,255,255,0.15);
-    color:white;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.25);
+@keyframes textPulse{
+    0%{ opacity: 0.7; transform: scale(0.98); }
+    50%{ opacity: 1; transform: scale(1.02); }
+    100%{ opacity: 0.7; transform: scale(0.98); }
 }
-
-.no-text{
-    margin-top:1.5rem;
-    font-size:1rem;
-    opacity:0.9;
-    min-height:1.5em;
-}
-
-/* SEKTION 2 */
-.content{
-    max-width:600px;
-}
-
-.image{
-    width:100%;
-    max-width:320px;
-    border-radius:20px;
-    margin:1.5rem auto;
-    display:block;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-}
-
-/* KONFETTI */
-#confetti{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:-1;
-}
-
-/* HJÄRTAN */
-.heart{
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg);
-    opacity: 0.25;
-    filter: blur(4px);
-    animation: floatHeart linear forwards;
-    z-index:-1;
-}
-
-.heart::before,
-.heart::after{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background: inherit;
-    border-radius:50%;
-}
-
-.heart::before{ left:-50%; }
-.heart::after{ top:-50%; }
 
 @keyframes floatHeart{
-    from{ transform: translate(0,0) rotate(45deg); }
-    to{ transform: translate(-120vw,-120vh) rotate(45deg); }
+    to{
+        transform: translate(-120vw, -120vh) scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* 🌟 Entrance */
+.fade-in{
+    animation: fadeIn 1.2s ease;
+}
+
+.fade-in-delayed{
+    animation: fadeIn 1.6s ease;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
 }
