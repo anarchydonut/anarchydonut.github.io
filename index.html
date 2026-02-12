@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ja eller Nej</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff8ccf">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>Vill du?</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div id="bg"></div>
+<div id="hearts"></div>
 
-<section id="section1" class="section active">
-    <h1 class="title">Vill du?</h1>
+<div class="section">
 
-    <div class="button-wrapper">
-        <button id="yesBtn" class="btn yes">Ja</button>
-        <button id="noBtn" class="btn no">Nej</button>
+    <h1 class="fade-in">Vill du vara min alla hjärtans dag? 💖</h1>
+
+    <div class="glass-card fade-in-delayed">
+
+        <p id="noText">Jag lovar att fixa en perfekt dag ✨</p>
+
+        <div class="button-wrapper">
+            <button id="yesBtn">Ja 💘</button>
+            <button id="noBtn">Nej 🙈</button>
+        </div>
+
     </div>
 
-    <p id="noText" class="no-text"></p>
-</section>
-
-<section id="section2" class="section hidden">
-    <div class="content">
-        <img src="top.jpg" class="image" alt="Bild ovan">
-        <h2>Du valde Ja 🎉</h2>
-        <p>Det här är den dolda sektionen.</p>
-        <img src="bottom.jpg" class="image" alt="Bild nedan">
-    </div>
-</section>
-
-<canvas id="confetti"></canvas>
+</div>
 
 <script src="script.js"></script>
 </body>
