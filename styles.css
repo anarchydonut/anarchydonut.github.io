@@ -9,6 +9,13 @@ body{
     height:100vh;
     overflow:hidden;
     color:white;
+}
+
+/* PARALLAX BAKGRUND */
+#bg{
+    position:fixed;
+    inset:0;
+    z-index:-2;
 
     background: linear-gradient(135deg,
         #ff9acb,
@@ -19,6 +26,7 @@ body{
 
     background-size: 400% 400%;
     animation: gradientShift 12s ease infinite;
+    transition: transform 0.2s ease-out;
 }
 
 @keyframes gradientShift{
@@ -70,22 +78,28 @@ body{
     transition: all 0.25s ease;
 }
 
-/* Glow + glass look */
 .btn:hover{
     transform: scale(1.08);
     filter: brightness(1.1);
 }
 
-/* JA knapp */
+/* JA */
 .yes{
     left:0;
     background: linear-gradient(135deg,#ff4ecd,#ff6ec7);
     color:white;
-    box-shadow:
-        0 8px 25px rgba(255, 78, 205, 0.45);
+    box-shadow: 0 8px 25px rgba(255, 78, 205, 0.45);
+    animation: glowPulse 2s infinite;
 }
 
-/* NEJ knapp */
+/* Glow puls */
+@keyframes glowPulse{
+    0%{ box-shadow: 0 0 15px rgba(255,78,205,0.4); }
+    50%{ box-shadow: 0 0 35px rgba(255,78,205,0.9); }
+    100%{ box-shadow: 0 0 15px rgba(255,78,205,0.4); }
+}
+
+/* NEJ */
 .no{
     right:0;
     background: rgba(255,255,255,0.15);
@@ -120,6 +134,7 @@ body{
     position:fixed;
     inset:0;
     pointer-events:none;
+    z-index:-1;
 }
 
 /* HJÄRTAN */
@@ -127,31 +142,27 @@ body{
     position: fixed;
     width: 20px;
     height: 20px;
-    background: pink;
     transform: rotate(45deg);
     opacity: 0.25;
     filter: blur(4px);
     animation: floatHeart linear forwards;
+    z-index:-1;
 }
 
 .heart::before,
 .heart::after{
     content:"";
     position:absolute;
-    width:20px;
-    height:20px;
+    width:100%;
+    height:100%;
     background: inherit;
     border-radius:50%;
 }
 
-.heart::before{ left:-10px; }
-.heart::after{ top:-10px; }
+.heart::before{ left:-50%; }
+.heart::after{ top:-50%; }
 
 @keyframes floatHeart{
-    from{
-        transform: translate(0,0) rotate(45deg);
-    }
-    to{
-        transform: translate(-120vw,-120vh) rotate(45deg);
-    }
+    from{ transform: translate(0,0) rotate(45deg); }
+    to{ transform: translate(-120vw,-120vh) rotate(45deg); }
 }
