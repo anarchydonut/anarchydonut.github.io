@@ -2,33 +2,28 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const noText = document.getElementById("noText");
 
-let typingInterval;
 let noClicks = 0;
 
 const messages = [
     "Är du säker? 🥺",
-    "Tänk efter lite till 💭",
-    "Jag bjuder på fika ☕",
-    "Och kanske en kyss 😌",
+    "Men tänk så mysigt 💞",
+    "Jag fixar snacks 😌",
+    "Pretty please? 💖",
     "Okej… jag ger mig 💔"
 ];
 
 function typeWriter(text){
-    clearInterval(typingInterval);
     noText.textContent = "";
-
     let i = 0;
-    typingInterval = setInterval(() => {
+
+    const interval = setInterval(() => {
         noText.textContent += text[i];
         i++;
-
-        if(i >= text.length){
-            clearInterval(typingInterval);
-        }
-    }, 35);
+        if(i >= text.length) clearInterval(interval);
+    }, 30);
 }
 
-/* 🙈 No button flyr */
+/* 🙈 NO BUTTON FLYR */
 noBtn.addEventListener("click", () => {
 
     if(noClicks < messages.length){
@@ -37,38 +32,28 @@ noBtn.addEventListener("click", () => {
 
     noClicks++;
 
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 60 - 30;
+    const wrapper = document.querySelector(".button-wrapper");
+    const maxX = wrapper.clientWidth - noBtn.clientWidth;
+    const maxY = wrapper.clientHeight - noBtn.clientHeight;
 
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
 });
 
-/* 💘 Yes button */
+/* 💘 YES BUTTON EXPANDS */
 yesBtn.addEventListener("click", () => {
 
     typeWriter("YAAAY!! 💖✨");
 
     yesBtn.style.position = "fixed";
-    yesBtn.style.inset = "0";
+    yesBtn.style.top = "0";
+    yesBtn.style.left = "0";
     yesBtn.style.width = "100vw";
-    yesBtn.style.height = "100vh";
-    yesBtn.style.fontSize = "40px";
+    yesBtn.style.height = "100dvh";
     yesBtn.style.borderRadius = "0";
+    yesBtn.style.fontSize = "42px";
+    yesBtn.style.zIndex = "999";
 });
-
-/* 💖 Floating hearts */
-function createHeart(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.textContent = "💖";
-
-    heart.style.right = "-20px";
-    heart.style.bottom = "-20px";
-    heart.style.animationDuration = (6 + Math.random() * 6) + "s";
-
-    document.getElementById("hearts").appendChild(heart);
-
-    setTimeout(() => heart.remove(), 12000);
-}
-
-setInterval(createHeart, 900);
