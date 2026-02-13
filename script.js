@@ -1,8 +1,15 @@
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const noText = document.getElementById("noText");
+const hearts = document.getElementById("hearts");
+const confetti = document.getElementById("confetti");
+const pling = document.getElementById("pling");
+
+const section1 = document.getElementById("section1");
+const section2 = document.getElementById("section2");
 
 let noClicks = 0;
+let yesScale = 1;
 
 const messages = [
     "Är du säker? 🥺",
@@ -17,13 +24,64 @@ function typeWriter(text){
     let i = 0;
 
     const interval = setInterval(() => {
-        noText.textContent += text[i];
-        i++;
-        if(i >= text.length) clearInterval(interval);
+        if(i < text.length){
+            noText.textContent += text[i];
+            i++;
+        } else {
+            clearInterval(interval);
+        }
     }, 30);
 }
 
-/* 🙈 NO BUTTON FLYR */
+/* 💖 Floating hearts idle */
+function spawnHeart(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💖";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = Math.random() * 100 + "vh";
+    heart.style.animationDuration = (4 + Math.random()*4) + "s";
+
+    hearts.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+
+setInterval(spawnHeart, 900);
+
+/* 💥 Heart rain */
+function heartRain(){
+    for(let i = 0; i < 40; i++){
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "💖";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "-20px";
+        heart.style.fontSize = (18 + Math.random()*20) + "px";
+        heart.style.animation = `confettiFall ${1 + Math.random()}s ease-out forwards`;
+
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+    }
+}
+
+/* 🎉 Confetti */
+function confettiBurst(){
+    for(let i = 0; i < 80; i++){
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+
+        piece.style.left = Math.random()*100 + "vw";
+        piece.style.top = "-10px";
+        piece.style.background = `hsl(${Math.random()*360},100%,70%)`;
+
+        confetti.appendChild(piece);
+        setTimeout(() => piece.remove(), 1400);
+    }
+}
+
+/* 🙈 NO */
 noBtn.addEventListener("click", () => {
 
     if(noClicks < messages.length){
@@ -32,28 +90,35 @@ noBtn.addEventListener("click", () => {
 
     noClicks++;
 
+    yesScale += 0.15;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
     const wrapper = document.querySelector(".button-wrapper");
     const maxX = wrapper.clientWidth - noBtn.clientWidth;
     const maxY = wrapper.clientHeight - noBtn.clientHeight;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
+    noBtn.style.left = Math.random()*maxX + "px";
+    noBtn.style.top = Math.random()*maxY + "px";
 });
 
-/* 💘 YES BUTTON EXPANDS */
+/* 💘 YES */
 yesBtn.addEventListener("click", () => {
+
+    pling.currentTime = 0;
+    pling.play().catch(() => {});
 
     typeWriter("YAAAY!! 💖✨");
 
-    yesBtn.style.position = "fixed";
-    yesBtn.style.top = "0";
-    yesBtn.style.left = "0";
-    yesBtn.style.width = "100vw";
-    yesBtn.style.height = "100dvh";
-    yesBtn.style.borderRadius = "0";
-    yesBtn.style.fontSize = "42px";
-    yesBtn.style.zIndex = "999";
+    confettiBurst();
+    heartRain();
+
+    yesBtn.classList.add("expand");
+
+    section1.classList.remove("active");
+    section1.classList.add("hidden");
+
+    setTimeout(() => {
+        section2.classList.remove("hidden");
+        section2.classList.add("active");
+    }, 500);
 });
