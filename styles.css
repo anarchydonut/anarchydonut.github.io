@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+    background: black;
 }
 
 body{
@@ -12,10 +13,10 @@ body{
     color: white;
 }
 
-/* 🌈 Gradient bakgrund */
+/* 🌈 Background FIX */
 #bg{
     position: fixed;
-    inset: 0;
+    inset: -20px; /* hack mot vita bars */
     z-index: -2;
 
     background: linear-gradient(135deg,
@@ -26,10 +27,10 @@ body{
     );
 
     background-size: 400% 400%;
-    animation: gradientShift 14s ease infinite;
+    animation: gradientShift 15s ease infinite;
 }
 
-/* 💖 Hearts container */
+/* 💖 Hearts */
 #hearts{
     position: fixed;
     inset: 0;
@@ -41,26 +42,33 @@ body{
     position: absolute;
     font-size: 20px;
     opacity: 0.25;
-    filter: blur(2px);
     animation: floatHeart linear forwards;
 }
 
-/* 📦 Main section */
+/* 📦 Layout */
 .section{
     height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding:
+        calc(20px + env(safe-area-inset-top))
+        20px
+        calc(20px + env(safe-area-inset-bottom));
     text-align: center;
 }
 
-/* 🧊 Glass card */
+.title{
+    font-size: 28px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease;
+}
+
+/* 🧊 Glass */
 .glass-card{
-    margin-top: 30px;
-    padding: 30px;
-    width: min(340px, 90vw);
+    padding: 28px;
+    width: min(340px, 92vw);
 
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(18px);
@@ -68,47 +76,41 @@ body{
 
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.25);
-
-    box-shadow:
-        0 8px 32px rgba(0,0,0,0.2),
-        inset 0 0 12px rgba(255,255,255,0.2);
 }
 
-/* ✨ Cute text */
+/* ✨ Text */
 #noText{
     font-size: 18px;
-    margin-bottom: 25px;
+    margin-bottom: 22px;
     min-height: 24px;
-    animation: textPulse 2.5s ease-in-out infinite;
 }
 
 /* 🔘 Buttons */
 .button-wrapper{
     position: relative;
-    width: min(280px, 90vw);
-    height: 80px;
+    width: 260px;
+    height: 70px;
 }
 
 button{
     position: absolute;
-    padding: 12px 22px;
+    padding: 12px 24px;
     border-radius: 999px;
     border: none;
     font-size: 16px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: all 0.35s ease;
 }
 
-/* 💘 Yes */
+/* 💘 YES */
 #yesBtn{
     left: 0;
     background: linear-gradient(135deg, #ff4fa3, #ff7ac6);
     color: white;
     box-shadow: 0 0 18px rgba(255, 80, 160, 0.6);
-    animation: glowPulse 2s infinite;
 }
 
-/* 🙈 No */
+/* 🙈 NO */
 #noBtn{
     right: 0;
     background: rgba(255,255,255,0.25);
@@ -122,32 +124,11 @@ button{
     100%{ background-position: 0% 50%; }
 }
 
-@keyframes glowPulse{
-    0%{ box-shadow: 0 0 12px rgba(255,80,160,0.4); }
-    50%{ box-shadow: 0 0 26px rgba(255,80,160,0.9); }
-    100%{ box-shadow: 0 0 12px rgba(255,80,160,0.4); }
-}
-
-@keyframes textPulse{
-    0%{ opacity: 0.7; transform: scale(0.98); }
-    50%{ opacity: 1; transform: scale(1.02); }
-    100%{ opacity: 0.7; transform: scale(0.98); }
-}
-
 @keyframes floatHeart{
     to{
         transform: translate(-120vw, -120vh) scale(1.4);
         opacity: 0;
     }
-}
-
-/* 🌟 Entrance */
-.fade-in{
-    animation: fadeIn 1.2s ease;
-}
-
-.fade-in-delayed{
-    animation: fadeIn 1.6s ease;
 }
 
 @keyframes fadeIn{
