@@ -13,7 +13,7 @@ body{
     color:white;
 }
 
-/* 🌈 Background */
+/* 🌈 Gradient background */
 #bg{
     position:fixed;
     inset:-20px;
@@ -68,7 +68,10 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
+    padding:
+        calc(20px + env(safe-area-inset-top))
+        20px
+        calc(20px + env(safe-area-inset-bottom));
     text-align:center;
 
     transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
@@ -77,8 +80,8 @@ body{
 .section.hidden{
     opacity:0;
     pointer-events:none;
-    transform: scale(1.1);
-    filter: blur(10px);
+    transform: scale(1.15);
+    filter: blur(14px);
 }
 
 .section.active{
@@ -98,6 +101,10 @@ body{
 
     border-radius:24px;
     border:1px solid rgba(255,255,255,0.25);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
 .glass-card.big{
@@ -115,6 +122,15 @@ body{
     opacity:0;
     animation: fadeInText 2s ease forwards;
     animation-delay: 0.6s;
+}
+
+/* 💖 Images */
+.love-img{
+    width:100%;
+    border-radius:18px;
+    margin:10px 0;
+    object-fit:cover;
+    max-height:140px;
 }
 
 /* 🔘 Buttons */
