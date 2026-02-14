@@ -4,19 +4,20 @@ html, body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:black;
 }
+
+/* ❌ Ingen svart bakgrund längre */
 
 body{
     font-family:-apple-system, BlinkMacSystemFont, sans-serif;
     color:white;
 }
 
-/* 🌈 Background */
+/* 🌈 Gradient background */
 #bg{
     position:fixed;
     inset:0;
-    z-index:-5;
+    z-index:-10;
 
     background: linear-gradient(135deg,
         #ffb6d9,
@@ -34,11 +35,12 @@ body{
     position:fixed;
     inset:0;
     pointer-events:none;
+    z-index:-5;
 }
 
 .heart{
     position:absolute;
-    opacity:0.35;
+    opacity:0.3;
     animation: floatHeart linear forwards;
 }
 
@@ -47,6 +49,7 @@ body{
     position:fixed;
     inset:0;
     pointer-events:none;
+    z-index:30;
 }
 
 .confetti{
@@ -121,7 +124,7 @@ body{
 /* 💖 Images */
 .love-img{
     width:100%;
-    height:220px;
+    height:200px;   /* ✅ Lite högre */
     object-fit:cover;
     border-radius:18px;
     margin:12px 0;
@@ -182,15 +185,17 @@ button{
 }
 
 /* ✨ Animations */
+
 @keyframes gradientShift{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
+/* ✅ Diagonal dreamy float */
 @keyframes floatHeart{
     to{
-        transform: translateY(-120vh) scale(1.4);
+        transform: translate(-120vw, -120vh) scale(1.4);
         opacity:0;
     }
 }
