@@ -25,61 +25,73 @@ function typeWriter(text){
 
     const interval = setInterval(() => {
         if(i < text.length){
-            noText.textContent += text[i];
-            i++;
+            noText.textContent += text[i++];
         } else clearInterval(interval);
     }, 32);
 }
 
-/* 💖 Floating hearts ambient */
+/* 💖 Ambient hearts */
 function spawnHeart(){
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.textContent = "💖";
 
     heart.style.left = Math.random()*100 + "vw";
-    heart.style.top = Math.random()*100 + "vh";
-    heart.style.animationDuration = (6 + Math.random()*4) + "s";
+    heart.style.top = 100 + Math.random()*20 + "vh";
+    heart.style.fontSize = (14 + Math.random()*22) + "px";
+    heart.style.animationDuration = (6 + Math.random()*5) + "s";
+    heart.style.zIndex = Math.floor(Math.random()*3);
 
     hearts.appendChild(heart);
-    setTimeout(() => heart.remove(), 10000);
+    setTimeout(() => heart.remove(), 11000);
 }
 
-setInterval(spawnHeart, 1200);
+setInterval(spawnHeart, 900);
 
-/* 💖 Heart rain – cinematic & spread */
+/* 💖 Heart rain */
 function heartRain(){
-    for(let i=0;i<40;i++){
+    for(let i=0;i<45;i++){
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "💖";
 
         heart.style.left = Math.random()*100 + "vw";
-        heart.style.top = "-30px";
-        heart.style.fontSize = (18 + Math.random()*26) + "px";
-        heart.style.animation = `confettiFall ${2.2 + Math.random()}s ease-out forwards`;
+        heart.style.top = "-40px";
+        heart.style.fontSize = (18 + Math.random()*28) + "px";
+        heart.style.animation = `confettiFall ${2.4 + Math.random()}s ease-out forwards`;
+        heart.style.zIndex = 10 + Math.floor(Math.random()*5);
 
         hearts.appendChild(heart);
-        setTimeout(() => heart.remove(), 2600);
+        setTimeout(() => heart.remove(), 2800);
     }
 }
 
-/* 🎉 Confetti – slower & full screen */
+/* 🎉 Confetti FIXED */
 function confettiBurst(){
-    for(let i=0;i<90;i++){
+    for(let i=0;i<120;i++){
         const piece = document.createElement("div");
         piece.className = "confetti";
 
+        const size = 6 + Math.random()*10;
+
+        piece.style.width = size + "px";
+        piece.style.height = size + "px";
+
+        /* RANDOM FULL SCREEN SPAWN */
         piece.style.left = Math.random()*100 + "vw";
-        piece.style.top = "-10px";
+        piece.style.top = Math.random()*100 + "vh";
+
         piece.style.background = `hsl(${Math.random()*360},100%,70%)`;
 
+        piece.style.animationDuration = (2.2 + Math.random()*1.4) + "s";
+        piece.style.zIndex = 5 + Math.floor(Math.random()*10);
+
         confetti.appendChild(piece);
-        setTimeout(() => piece.remove(), 2600);
+        setTimeout(() => piece.remove(), 4000);
     }
 }
 
-/* 🙈 NO click */
+/* 🙈 NO */
 noBtn.addEventListener("click", () => {
 
     if(noClicks < messages.length){
@@ -100,14 +112,14 @@ noBtn.addEventListener("click", () => {
     noBtn.style.right = "auto";
 });
 
-/* 💘 YES click */
+/* 💘 YES */
 yesBtn.addEventListener("click", () => {
 
     pling.currentTime = 0;
     pling.play().catch(()=>{});
 
     confettiBurst();
-    setTimeout(heartRain, 180);
+    setTimeout(heartRain, 150);
 
     yesBtn.classList.add("expand");
 
