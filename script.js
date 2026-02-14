@@ -10,114 +10,136 @@ const section2 = document.getElementById("section2");
 
 let noClicks = 0;
 let yesScale = 1;
-let typingInterval;   // ✅ glitch fix
+let typing = false;
 
 const messages = [
     "Är du säker? 🥺",
     "Men tänk så mysigt 💞",
     "Jag fixar snacks 😌",
     "Pretty please? 💖",
-    "Okej… jag ger mig 💔"
+    "🏆 Achievement unlocked:",
+    "Stubborn Level 5 😏"
 ];
 
-function typeWriter(text){
-    clearInterval(typingInterval);   // ✅ stoppa gammal animation
-    noText.textContent = "";
+function typeWriter(text) {
+    if (typing) return;
+    typing = true;
 
+    noText.textContent = "";
     let i = 0;
-    typingInterval = setInterval(() => {
-        if(i < text.length){
-            noText.textContent += text[i++];
+
+    const interval = setInterval(() => {
+        if (i < text.length) {
+            noText.textContent += text[i];
+            i++;
         } else {
-            clearInterval(typingInterval);
+            clearInterval(interval);
+            typing = false;
         }
     }, 30);
 }
 
-/* 💖 Ambient hearts (diagonal drift) */
-function spawnHeart(){
+function spawnHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.textContent = "💖";
 
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.top = Math.random()*100 + "vh";
-    heart.style.fontSize = (14 + Math.random()*22) + "px";
-    heart.style.animationDuration = (6 + Math.random()*6) + "s";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = Math.random() * 100 + "vh";
+    heart.style.animationDuration = (6 + Math.random() * 6) + "s";
 
     hearts.appendChild(heart);
     setTimeout(() => heart.remove(), 12000);
 }
 
-setInterval(spawnHeart, 900);
+setInterval(spawnHeart, 1200);
 
-/* 🎉 Confetti */
-function confettiBurst(){
-    for(let i=0;i<120;i++){
-        const piece = document.createElement("div");
-        piece.className = "confetti";
-
-        const size = 6 + Math.random()*10;
-
-        piece.style.width = size + "px";
-        piece.style.height = size + "px";
-        piece.style.left = Math.random()*100 + "vw";
-        piece.style.top = Math.random()*100 + "vh";
-
-        piece.style.background = `hsl(${Math.random()*360},100%,70%)`;
-        piece.style.animationDuration = (2.2 + Math.random()*1.6) + "s";
-
-        confetti.appendChild(piece);
-        setTimeout(() => piece.remove(), 4000);
-    }
-}
-
-/* 💖 Heart rain */
-function heartRain(){
-    for(let i=0;i<45;i++){
+function heartBurst() {
+    for (let i = 0; i < 25; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "💖";
 
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.top = "-40px";
-        heart.style.fontSize = (18 + Math.random()*28) + "px";
-        heart.style.animation = `confettiFall ${2.4 + Math.random()}s ease-out forwards`;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = Math.random() * 100 + "vh";
+        heart.style.animationDuration = (2 + Math.random() * 2) + "s";
 
         hearts.appendChild(heart);
-        setTimeout(() => heart.remove(), 2800);
+        setTimeout(() => heart.remove(), 4000);
     }
 }
 
-/* 🙈 NO */
+function confettiBurst() {
+    for (let i = 0; i < 120; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.top = "-10px";
+        piece.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        piece.style.animationDuration = (2 + Math.random()) + "s";
+
+        confetti.appendChild(piece);
+        setTimeout(() => piece.remove(), 3000);
+    }
+}
+
+/* 🙈 NO CLICK */
 noBtn.addEventListener("click", () => {
 
-    if(noClicks < messages.length){
-        typeWriter(messages[noClicks]);
+    noClicks++;
+
+    if (noClicks <= 4) {
+        typeWriter(messages[noClicks - 1]);
     }
 
-    noClicks++;
+    if (noClicks === 5) {
+        typeWriter(messages[4]);
+        setTimeout(() => typeWriter(messages[5]), 600);
+    }
+
+    if (noClicks > 5) {
+        noBtn.classList.add("shake");
+        yesBtn.classList.add("boost");
+
+        heartBurst();
+
+        setTimeout(() => {
+            noBtn.classList.remove("shake");
+        }, 400);
+
+        typeWriter("Hmm… den verkar inte vilja säga nej längre 🙈");
+    }
 
     yesScale += 0.12;
     yesBtn.style.transform = `scale(${yesScale})`;
 
+    moveNoButton();
+});
+
+/* 💨 Keep NO on right side */
+function moveNoButton() {
     const wrapper = document.querySelector(".button-wrapper");
+
+    const halfWidth = wrapper.clientWidth / 2;
     const maxX = wrapper.clientWidth - noBtn.clientWidth;
     const maxY = wrapper.clientHeight - noBtn.clientHeight;
 
-    noBtn.style.left = `${Math.random()*maxX}px`;
-    noBtn.style.top = `${Math.random()*maxY}px`;
-    noBtn.style.right = "auto";
-});
+    const x = halfWidth + Math.random() * (maxX - halfWidth);
+    const y = Math.random() * maxY;
 
-/* 💘 YES */
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+}
+
+/* 💘 YES CLICK */
 yesBtn.addEventListener("click", () => {
 
     pling.currentTime = 0;
-    pling.play().catch(()=>{});
+    pling.play().catch(() => {});
 
     confettiBurst();
-    setTimeout(heartRain, 150);
+    heartBurst();
 
     yesBtn.classList.add("expand");
 
@@ -127,5 +149,5 @@ yesBtn.addEventListener("click", () => {
     setTimeout(() => {
         section2.classList.remove("hidden");
         section2.classList.add("active");
-    }, 650);
+    }, 600);
 });
