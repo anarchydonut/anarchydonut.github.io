@@ -1,29 +1,21 @@
-/* ✅ FULL iPhone white-bar fix */
-html{
+html, body{
     margin:0;
     padding:0;
     width:100%;
     height:100%;
-    background:black;
+    overflow:hidden;
+    background:transparent;
 }
 
 body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    min-height:100dvh;
-    overflow:hidden;
-
     font-family:-apple-system, BlinkMacSystemFont, sans-serif;
     color:white;
-    background:black;
 }
 
-/* 🌈 Gradient background */
+/* 🌈 Gradient */
 #bg{
     position:fixed;
-    inset:-20px;
+    inset:0;
     z-index:-3;
 
     background: linear-gradient(135deg,
@@ -34,7 +26,9 @@ body{
     );
 
     background-size:400% 400%;
-    animation: gradientShift 15s ease infinite;
+    animation: gradientShift 18s ease infinite;
+
+    transform: scale(1.1);
 }
 
 /* 💖 Hearts */
@@ -62,10 +56,10 @@ body{
 
 .confetti{
     position:absolute;
-    width:8px;
-    height:8px;
-    border-radius:2px;
-    animation: confettiFall 1.4s ease-out forwards;
+    width:10px;
+    height:10px;
+    border-radius:3px;
+    animation: confettiFall 2.6s ease-out forwards;
 }
 
 /* 📦 Sections */
@@ -83,14 +77,18 @@ body{
 
     text-align:center;
 
-    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+    transition: 
+        opacity 1.1s ease,
+        transform 1.1s ease,
+        filter 1.1s ease;
 }
 
+/* 🎬 Cinematic blur states */
 .section.hidden{
     opacity:0;
     pointer-events:none;
-    transform: scale(1.1);
-    filter: blur(12px);
+    transform: scale(1.08);
+    filter: blur(18px);
 }
 
 .section.active{
@@ -99,12 +97,12 @@ body{
     filter: blur(0);
 }
 
-/* ✅ FIX: Layout wrapper */
+/* ✨ Layout */
 .content{
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:20px;
+    gap:22px;
 }
 
 /* 🧊 Glass */
@@ -124,6 +122,19 @@ body{
     align-items:center;
 }
 
+.big{
+    animation: cinematicReveal 1.2s ease;
+}
+
+/* 💖 Images */
+.love-img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:18px;
+    margin:12px 0;
+}
+
 /* ✨ Text */
 .title{
     margin:0;
@@ -136,20 +147,11 @@ body{
     min-height:24px;
 }
 
-/* 💖 Images FIX */
-.love-img{
-    width:100%;
-    max-height:200px;     /* ✅ HARD LIMIT */
-    object-fit:cover;
-    border-radius:18px;
-    margin:10px 0;
-}
-
 /* 🔘 Buttons */
 .button-wrapper{
     position:relative;
     width:260px;
-    height:70px;
+    height:80px;
 }
 
 button{
@@ -168,17 +170,18 @@ button{
     background: linear-gradient(135deg, #ff4fa3, #ff7ac6);
     color:white;
     box-shadow:0 0 18px rgba(255,80,160,0.6);
-    animation: glowPulse 2s infinite;
+    animation: glowPulse 2.4s infinite;
 }
 
 /* 🙈 NO */
 #noBtn{
-    left:140px;
+    right:0;
+    left:auto;
     background: rgba(255,255,255,0.25);
     color:white;
 }
 
-/* 💥 YES EXPAND */
+/* 💥 Expand */
 #yesBtn.expand{
     position:fixed;
     inset:0;
@@ -206,7 +209,7 @@ button{
 
 @keyframes glowPulse{
     0%{ box-shadow:0 0 12px rgba(255,80,160,0.4);}
-    50%{ box-shadow:0 0 26px rgba(255,80,160,0.9);}
+    50%{ box-shadow:0 0 28px rgba(255,80,160,0.9);}
     100%{ box-shadow:0 0 12px rgba(255,80,160,0.4);}
 }
 
@@ -217,13 +220,26 @@ button{
     }
 }
 
+/* 🎬 Cinematic reveal */
+@keyframes cinematicReveal{
+    from{
+        opacity:0;
+        transform: scale(0.92);
+        filter: blur(16px);
+    }
+    to{
+        opacity:1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
 .fade-in{
     opacity:0;
-    animation: fadeInText 2s ease forwards;
-    animation-delay:0.5s;
+    animation: fadeInText 2.2s ease forwards;
+    animation-delay:0.6s;
 }
 
 @keyframes fadeInText{
     to{opacity:1;}
 }
-
