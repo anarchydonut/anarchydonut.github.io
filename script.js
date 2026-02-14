@@ -27,20 +27,17 @@ function typeWriter(text){
         if(i < text.length){
             noText.textContent += text[i];
             i++;
-        } else {
-            clearInterval(interval);
-        }
+        } else clearInterval(interval);
     }, 30);
 }
 
-/* 💖 Idle hearts */
 function spawnHeart(){
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.textContent = "💖";
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.top = Math.random() * 100 + "vh";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.top = Math.random()*100 + "vh";
     heart.style.animationDuration = (4 + Math.random()*4) + "s";
 
     hearts.appendChild(heart);
@@ -49,14 +46,13 @@ function spawnHeart(){
 
 setInterval(spawnHeart, 900);
 
-/* 💥 Heart rain */
 function heartRain(){
-    for(let i = 0; i < 80; i++){
+    for(let i=0;i<80;i++){
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "💖";
 
-        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.left = Math.random()*100 + "vw";
         heart.style.top = "-20px";
         heart.style.fontSize = (18 + Math.random()*20) + "px";
         heart.style.animation = `confettiFall ${1 + Math.random()}s ease-out forwards`;
@@ -66,9 +62,8 @@ function heartRain(){
     }
 }
 
-/* 🎉 Confetti */
 function confettiBurst(){
-    for(let i = 0; i < 140; i++){
+    for(let i=0;i<140;i++){
         const piece = document.createElement("div");
         piece.className = "confetti";
 
@@ -81,7 +76,6 @@ function confettiBurst(){
     }
 }
 
-/* 🙈 NO */
 noBtn.addEventListener("click", () => {
 
     if(noClicks < messages.length){
@@ -101,13 +95,10 @@ noBtn.addEventListener("click", () => {
     noBtn.style.top = Math.random()*maxY + "px";
 });
 
-/* 💘 YES */
 yesBtn.addEventListener("click", () => {
 
     pling.currentTime = 0;
-    pling.play().catch(() => {});
-
-    typeWriter("YAAAY!! 💖✨");
+    pling.play().catch(()=>{});
 
     confettiBurst();
     heartRain();
@@ -116,15 +107,6 @@ yesBtn.addEventListener("click", () => {
 
     section1.classList.remove("active");
     section1.classList.add("hidden");
-
-    document.body.animate(
-        [
-            { filter: "brightness(1)" },
-            { filter: "brightness(1.8)" },
-            { filter: "brightness(1)" }
-        ],
-        { duration: 300 }
-    );
 
     setTimeout(() => {
         section2.classList.remove("hidden");
