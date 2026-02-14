@@ -15,10 +15,9 @@ let typing = false;
 const messages = [
     "Är du säker? 🥺",
     "Men tänk så mysigt 💞",
-    "Jag fixar snacks 😌",
+    "Jag fixar mat och städar 😌",
     "Pretty please? 💖",
-    "🏆 Achievement unlocked:",
-    "Stubborn Level 5 😏"
+    "🏆 Achievement unlocked: 5 i rad"
 ];
 
 function typeWriter(text) {
@@ -108,7 +107,7 @@ noBtn.addEventListener("click", () => {
             noBtn.classList.remove("shake");
         }, 400);
 
-        typeWriter("Hmm… den verkar inte vilja säga nej längre 🙈");
+        typeWriter("Hmm… jag tror att Nej-knappen kan vara sönder. 🙈");
     }
 
     yesScale += 0.12;
@@ -151,3 +150,4 @@ yesBtn.addEventListener("click", () => {
         section2.classList.add("active");
     }, 600);
 });
+
