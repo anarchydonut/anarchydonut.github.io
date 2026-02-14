@@ -33,7 +33,7 @@ function typeWriter(text){
     }, 30);
 }
 
-/* 💖 Floating hearts idle */
+/* 💖 Idle hearts */
 function spawnHeart(){
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -51,7 +51,7 @@ setInterval(spawnHeart, 900);
 
 /* 💥 Heart rain */
 function heartRain(){
-    for(let i = 0; i < 40; i++){
+    for(let i = 0; i < 80; i++){
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.textContent = "💖";
@@ -68,7 +68,7 @@ function heartRain(){
 
 /* 🎉 Confetti */
 function confettiBurst(){
-    for(let i = 0; i < 80; i++){
+    for(let i = 0; i < 140; i++){
         const piece = document.createElement("div");
         piece.className = "confetti";
 
@@ -116,6 +116,15 @@ yesBtn.addEventListener("click", () => {
 
     section1.classList.remove("active");
     section1.classList.add("hidden");
+
+    document.body.animate(
+        [
+            { filter: "brightness(1)" },
+            { filter: "brightness(1.8)" },
+            { filter: "brightness(1)" }
+        ],
+        { duration: 300 }
+    );
 
     setTimeout(() => {
         section2.classList.remove("hidden");
